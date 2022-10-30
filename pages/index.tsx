@@ -5,7 +5,7 @@ import { NextPage } from 'next'
  const  HomePage: NextPage=() =>{
   return (
    
-    <Typography>hola mundo</Typography>
+    <Typography  variant='h1' color='primary'>Hola mundo</Typography>
   )
 }
 
