@@ -9,5 +9,14 @@ export const  lightTheme=createTheme({
         primary:{main: "#4a148c" },
         secondary:{main:"#19857b"},
         error:{main: red.A400}
-        }
+        },
+        components:{
+            MuiAppBar:{
+                defaultProps:{
+                    elevation:0,
+                },
+                styleOverrides:{
+                    }
+            },
+    }
 }) 
