@@ -47,7 +47,7 @@ export const EntrieList:FC<Props> = ({status}) => {
             padding: "1px 5px",
             margin: "0px 10px"
             }}>
-                {/*TODO:cambiara si esta en drag o no */}
+                
                 <List sx={{opacity: isDragging?0.2:1, transition:"all .3s "}}>
                     {entryByStatus.map((entry)=>{
                             return <EntryCard  entry={entry}  key={entry._id}/>
