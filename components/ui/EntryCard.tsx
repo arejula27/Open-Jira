@@ -1,58 +1,65 @@
-import { Card, CardActionArea, CardActions, CardContent, Typography } from '@mui/material'
-import React, { FC, DragEvent, useContext } from 'react'
-import { UIContext } from '../../context/ui'
-import { Entry } from '../../interfaces'
-
+import {
+    Card,
+    CardActionArea,
+    CardActions,
+    CardContent,
+    Typography
+} from '@mui/material';
+import { useRouter } from 'next/router';
+import React, { FC, DragEvent, useContext } from 'react';
+import { UIContext } from '../../context/ui';
+import { Entry } from '../../interfaces';
+import { getFormatDistanceToNow } from '../../utils/';
 
 interface Props {
-    entry:Entry
+    entry: Entry;
 }
 
-export const EntryCard:FC<Props> = ({entry}) => {
+export const EntryCard: FC<Props> = ({ entry }) => {
+    const router = useRouter();
 
-    const {startDragging,endDragging} = useContext(UIContext)
+    const { startDragging, endDragging } = useContext(UIContext);
 
-    const onDragStart = (event: DragEvent) =>{
-        
-      
-        event.dataTransfer.setData("text",entry._id)
-        startDragging()
+    const onDragStart = (event: DragEvent) => {
+        event.dataTransfer.setData('text', entry._id);
+        startDragging();
+    };
 
-    }
+    const onDragEnd = () => {
+        console.log('End');
 
-    const onDragEnd = ()=>{
-        console.log("End");
-        
-       endDragging()
+        endDragging();
+    };
+    const onClick = () => {
+        router.push(`/entries/${entry._id}`);
+    };
 
-    }
-
-
-  return (
-    
-    <Card
-        sx={{marginBottom:1}}
-        draggable
-        onDragStart={onDragStart}
-        onDragEnd={onDragEnd}
-
-    >
-        <CardActionArea>
-            <CardContent>
-                <Typography sx={{whiteSpace: 'pre-line'}}>
-                    {entry.description}
-                </Typography>
-
-            </CardContent>
-            <CardActions sx={{display:'flex',justifyContent: 'end', paddingRight:2}}>
-                <Typography variant='body2'>hace 30 min</Typography>
-
-            </CardActions>
-
-        </CardActionArea>
-
-
-    </Card>
-
-  )
-}
+    return (
+        <Card
+            sx={{ marginBottom: 1 }}
+            draggable
+            onDragStart={onDragStart}
+            onDragEnd={onDragEnd}
+            onClick={onClick}
+        >
+            <CardActionArea>
+                <CardContent>
+                    <Typography sx={{ whiteSpace: 'pre-line' }}>
+                        {entry.description}
+                    </Typography>
+                </CardContent>
+                <CardActions
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'end',
+                        paddingRight: 2
+                    }}
+                >
+                    <Typography variant="body2">
+                        {getFormatDistanceToNow(entry.createdAt)}
+                    </Typography>
+                </CardActions>
+            </CardActionArea>
+        </Card>
+    );
+};
